@@ -40,6 +40,7 @@ safety_settings = [
 
 @app.route('/user_input', methods=['POST'])
 def user_input():
+    # data = request.data['image']
     data = request.json
     user_input = data.get('message') 
 
