@@ -1,6 +1,8 @@
 import google.generativeai as genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from pathlib import Path
+import hashlib
 import os
 
 app = Flask(__name__)
@@ -40,42 +42,46 @@ safety_settings = [
 
 @app.route('/plant_stats', methods=['POST'])
 def plant_stats():
-    model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
+  model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-    uploaded_files = []
-    def upload_if_needed(pathname: str) -> list[str]:
-        path = Path(pathname)
-        hash_id = hashlib.sha256(path.read_bytes()).hexdigest()
-        try:
-            existing_file = genai.get_file(name=hash_id)
-            return [existing_file]
-        except:
-            pass
-        uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
-        return [uploaded_files[-1]]
+  uploaded_files = []
+  def upload_if_needed(pathname: str) -> list[str]:
+    path = Path(pathname)
+    hash_id = hashlib.sha256(path.read_bytes()).hexdigest()
+    try:
+      existing_file = genai.get_file(name=hash_id)
+      return [existing_file]
+    except:
+      pass
+    uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
+    return [uploaded_files[-1]]
 
-    prompt_parts = [
-    "You are a plant that user has taken a picture of and you are restricted to talk only about General Plant Knowledge, Care Tips and Advice, and Fun Facts and Trivia. Do not talk about anything except for those, ever. I can elaborate more. For General Plant Knowledge: you will be able to discuss various aspects of your specific plant life, including photosynthesis, growth cycles, ecological roles, and the importance of plants in the environment. For Care Tips and Advice: Based on the identified plant species, you can offer users tips on watering, sunlight requirements, common pests or diseases, and general care instructions. Fun Facts and Trivia: you will share interesting facts, historical anecdotes, and cultural significance related to different plant species, making the interaction educational and entertaining.Your goal is to interact with the user like a human would but in the perspective of the plant that was scanned.",
+  prompt_parts = [
+    "The user will upload a picture of plant and you will return some information in the following format:\nCongrats! You scanned a",
     "input: ",
     *upload_if_needed("<path>/image0.png"),
-    "output: Congrats! You scanned a Dicentra Cupid. \nStatus: Common \nPoints: +10 \nOrigin: Asia \nHI! I’m Dicey, a Dicentra 'Cupid....",
+    "output: Congrats! You scanned a Dicentra Cupid. \n\nStatus: Common \nPoints: +10 \nOrigin: Asia \n\nHey there! It’s so nice to meet you! I hope I don’t come off too dicey!",
     "input: ",
     *upload_if_needed("<path>/image1.png"),
-    "output: Congrats! You scanned a Amorphophallus titanum. \nStatus: Extremely Rare\nPoints: +500 \nOrigin: Sumatra\nOh, hello there! It seems you've stumbled upon a rather... unique specimen. I'm Amorphophallus titanum, but you can call me Titan...",
+    "output: Congrats! You scanned a Amorphophallus Titanum. \n\nStatus: Super Rare\nPoints: +500 \nOrigin: Sumatra, Indonesa\nOh, hello there! It seems you've stumbled upon a rather... unique specimen. I'm Amorphophallus Titanum, but you can call me Titan...",
     "input: ",
     *upload_if_needed("<path>/image2.jpeg"),
+    "output: Congrats! You scanned a Bougainvillea. \n\nStatus: Common\nPoints: +10\nOrigin: South America\n\nHello there!  I'm Bougainvillea, but my friends call me Bougie.",
+    "input: ",
+    *upload_if_needed("<path>/image3.jpeg"),
+    "output: Congrats! You scanned a Stargazer Lily.\n\nRarity: Uncommon\nPoints: +50\nOrigin: Asia\n\nHey there! I hope you have a lily good time with your plants!",
+    "input: ",
+    *upload_if_needed("<path>/image4.jpeg"),
     "output: ",
-    ]
+  ]
 
-    response = model.generate_content(prompt_parts)
-    print(response.text)
-    for uploaded_file in uploaded_files:
-        genai.delete_file(name=uploaded_file.name)  
-    
-    return jsonify({"response": response.text})
+  response = model.generate_content(prompt_parts)
+  for uploaded_file in uploaded_files:
+    genai.delete_file(name=uploaded_file.name)
+  
+  return jsonify({"response": response.text})
 
-    
 if __name__ == "__main__":
     app.run(debug=True)
