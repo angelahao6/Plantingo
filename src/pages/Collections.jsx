@@ -1,10 +1,9 @@
-import 'react';
-
 const Collections = () => {
   return (
-    <div>
-      <h1>About Page</h1>
-      <p>Learn more about us.</p>
+    <div style={{ backgroundColor: "#FFFDF3", height: "100vh" }}>
+      <p style={{ marginTop: "0" }}>About Page</p>
+      <p>hello</p>
+      <p style={{ marginBottom: "0" }}>Learn more about us.</p>
     </div>
   );
 };
