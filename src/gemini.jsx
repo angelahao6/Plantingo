@@ -15,7 +15,7 @@ function Gemini() {
       const response = await axios.post('http://127.0.0.1:5000/user_input', { message: inputText });
       setOutputText(response.data.response);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error.response.data);
     }
   };
 
