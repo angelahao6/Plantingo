@@ -25,6 +25,14 @@ const Home = () => {
       >
         Collections
       </button>
+      <br />
+      <button
+        onClick={() => {
+          navigate("/gemini");
+        }}
+      >
+        Gemini
+      </button>
     </div>
   );
 };
