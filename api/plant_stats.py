@@ -10,18 +10,6 @@ genai.configure(api_key=api_key)
 
 # genai.configure(api_key="API_KEY")
 
-"""
-At the command line, only need to run once to install the package via pip:
-
-$ pip install google-generativeai
-"""
-
-from pathlib import Path
-import hashlib
-import google.generativeai as genai
-
-genai.configure(api_key="YOUR_API_KEY")
-
 # Set up the model
 generation_config = {
   "temperature": 1,
