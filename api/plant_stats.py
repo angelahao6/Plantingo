@@ -81,7 +81,7 @@ def plant_stats():
     "output: ",
     ]
 
-    response = model.generate_content(prompt_parts)
+    response = model.generate_cgontent(prompt_parts)
     print(response.text)
     for uploaded_file in uploaded_files:
         genai.delete_file(name=uploaded_file.name)  
