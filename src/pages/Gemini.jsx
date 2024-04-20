@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 
 function Gemini() {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
+  const [chatHistory, setChatHistory] = useState([])
 
   const handleChange = (event) => {
     setInputText(event.target.value);
@@ -14,6 +15,7 @@ function Gemini() {
     try {
       const response = await axios.post('http://127.0.0.1:5000/user_input', { message: inputText });
       setOutputText(response.data.response);
+      chatHistory
     } catch (error) {
       console.error('Error:', error);
     }

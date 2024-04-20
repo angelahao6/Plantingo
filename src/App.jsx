@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import Scanner from './pages/Scanner';
 import Collections from "./pages/Collections";
-import Gemini from "./gemini";
+import Gemini from "./pages/Gemini";
 import './App.css'
 
 function App() {
