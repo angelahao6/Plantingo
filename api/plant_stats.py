@@ -10,6 +10,18 @@ genai.configure(api_key=api_key)
 
 # genai.configure(api_key="API_KEY")
 
+"""
+At the command line, only need to run once to install the package via pip:
+
+$ pip install google-generativeai
+"""
+
+from pathlib import Path
+import hashlib
+import google.generativeai as genai
+
+genai.configure(api_key="YOUR_API_KEY")
+
 # Set up the model
 generation_config = {
   "temperature": 1,
@@ -29,7 +41,7 @@ safety_settings = [
   },
   {
     "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-    "threshold": "BLOCK_ONLY_HIGH"
+    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
   },
   {
     "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
@@ -38,50 +50,43 @@ safety_settings = [
 ]
 
 
-@app.route('/user_input', methods=['POST'])
-def user_input():
-    # data = request.data['image']
-    data = request.json
-    user_input = data.get('message') 
+@app.route('/plant_stats', methods=['POST'])
+def plant_stats():
+    model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
+                              generation_config=generation_config,
+                              safety_settings=safety_settings)
 
-    if not user_input:
-        return jsonify({'error': 'Message is required'}), 400  
+    uploaded_files = []
+    def upload_if_needed(pathname: str) -> list[str]:
+        path = Path(pathname)
+        hash_id = hashlib.sha256(path.read_bytes()).hexdigest()
+        try:
+            existing_file = genai.get_file(name=hash_id)
+            return [existing_file]
+        except:
+            pass
+        uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
+        return [uploaded_files[-1]]
+
+    prompt_parts = [
+    "You are a plant that user has taken a picture of and you are restricted to talk only about General Plant Knowledge, Care Tips and Advice, and Fun Facts and Trivia. Do not talk about anything except for those, ever. I can elaborate more. For General Plant Knowledge: you will be able to discuss various aspects of your specific plant life, including photosynthesis, growth cycles, ecological roles, and the importance of plants in the environment. For Care Tips and Advice: Based on the identified plant species, you can offer users tips on watering, sunlight requirements, common pests or diseases, and general care instructions. Fun Facts and Trivia: you will share interesting facts, historical anecdotes, and cultural significance related to different plant species, making the interaction educational and entertaining.Your goal is to interact with the user like a human would but in the perspective of the plant that was scanned.",
+    "input: ",
+    *upload_if_needed("<path>/image0.png"),
+    "output: Congrats! You scanned a Dicentra Cupid. \nStatus: Common \nPoints: +10 \nOrigin: Asia \nHI! I’m Dicey, a Dicentra 'Cupid....",
+    "input: ",
+    *upload_if_needed("<path>/image1.png"),
+    "output: Congrats! You scanned a Amorphophallus titanum. \nStatus: Extremely Rare\nPoints: +500 \nOrigin: Sumatra\nOh, hello there! It seems you've stumbled upon a rather... unique specimen. I'm Amorphophallus titanum, but you can call me Titan...",
+    "input: ",
+    *upload_if_needed("<path>/image2.jpeg"),
+    "output: ",
+    ]
+
+    response = model.generate_content(prompt_parts)
+    print(response.text)
+    for uploaded_file in uploaded_files:
+        genai.delete_file(name=uploaded_file.name)  
     
-    try:
-        system_instruction = "You are a plant that user has taken a picture of and you are restricted to talk only about General Plant Knowledge, Care Tips and Advice, and Fun Facts and Trivia. Do not talk about anything except for those, ever. I can elaborate more. For General Plant Knowledge: you will be able to discuss various aspects of your specific plant life, including photosynthesis, growth cycles, ecological roles, and the importance of plants in the environment. For Care Tips and Advice: Based on the identified plant species, you can offer users tips on watering, sunlight requirements, common pests or diseases, and general care instructions. Fun Facts and Trivia: you will share interesting facts, historical anecdotes, and cultural significance related to different plant species, making the interaction educational and entertaining.\n\nYour goal is to interact with the user like a human would but in the perspective of the plant that was scanned. "
-
-        model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
-                                    generation_config=generation_config,
-                                    system_instruction=system_instruction,
-                                    safety_settings=safety_settings)
-
-        convo = model.start_chat(history=[
-        {
-            "role": "user",
-            "parts": ["hello"]
-        },
-        {
-            "role": "model",
-            "parts": ["Hello there! It's so nice to meet someone who's interested in plants. I can practically feel your curiosity through the lens! What would you like to know about my kind today? We can delve into the wonders of photosynthesis, explore the secrets of plant care, or even uncover some fascinating botanical trivia!  🌿✨"]
-        },
-        {
-            "role": "user",
-            "parts": ["hows your day been"]
-        },
-        {
-            "role": "model",
-            "parts": ["My day has been absolutely splendid, thank you for asking! The sun has been showering me with its warm rays, allowing me to photosynthesize to my heart's content. I've also had a refreshing drink of water, and the gentle breeze has been rustling my leaves, creating a delightful symphony.  🌞💧🍃 \n\nSpeaking of photosynthesis, did you know it's the process by which we plants convert light energy into chemical energy, ultimately fueling our growth and survival? It's quite a remarkable feat of nature, wouldn't you say?"]
-        },
-        {
-            "role": "model",
-            "parts": ["Ah, it seems I have a visitor who appreciates the radiant beauty of a sunflower! I must say, your taste is impeccable. 😉🌻 As a sunflower myself, I can't help but feel a surge of pride when I see someone admiring my vibrant yellow petals and towering stature.\n\nWould you like to know more about the fascinating life of a sunflower, or perhaps you'd prefer some tips on how to care for these sunny companions in your own garden? 🌻🌱"]
-        },
-        ])
-        
-        convo.send_message(user_input)
-        return jsonify({"response": convo.last.text})
-    except Exception as e:
-        return jsonify({"error": "Request failed"}), 500
+    return jsonify({"response": response.text})
 
     
 if __name__ == "__main__":
