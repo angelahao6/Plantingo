@@ -3,8 +3,11 @@ import Home from './pages/Home';
 import Scanner from './pages/Scanner';
 import Collections from "./pages/Collections";
 import Gemini from "./pages/Gemini";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import './App.css'
 import Navbar from "./components/Navbar";
+import Leaderboard from "./pages/Leaderboard";
 import { useState } from "react";
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -18,10 +21,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home setPage={setCurrentPage} />} />
-        <Route path="/scanner" element={<Scanner />} />
-        <Route path="/collections" element={<Collections />} />
-        <Route path="/gemini" element={<Gemini />} />
+        <Route path="/" element={<><Home setPage={setCurrentPage} /><Navbar /></>} />
+        <Route path="/login" element={<Login setPage={setCurrentPage}/>} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/scanner" element={<><Scanner /><Navbar /></>} />
+        <Route path="/collections" element={<><Collections /><Navbar /></>} />
+        <Route path="/gemini" element={<><Gemini /> <Navbar /></>} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
       <Navbar selected = {currentPage} updateSelected={setCurrentPage}/>
     </BrowserRouter>

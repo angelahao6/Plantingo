@@ -20,7 +20,7 @@ const Home = ( {setPage}) => {
       </div>
       <button
         onClick={() => {
-          navigate("/scanner");
+          navigate("/login");
           setPage(1);
         }}
         style={{

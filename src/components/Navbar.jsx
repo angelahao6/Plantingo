@@ -66,7 +66,7 @@ const Navbar = ({ selected, updateSelected }) => {
       <img
         src={cup}
         onClick={() => {
-          navigate("/gemini");
+          navigate("/leaderboard");
           updateSelected(3);
         }}
         style={{ margin: "0 30px" }}

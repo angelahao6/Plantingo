@@ -2,13 +2,19 @@ import google.generativeai as genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+from pymongo.mongo_client import MongoClient
+import certifi
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+
 api_key = os.getenv('GOOGLE_GENAI_API_KEY')
 genai.configure(api_key=api_key)
+uri = os.getenv('MONGO_URI')
+client = MongoClient(uri, tlsCAFile=certifi.where())
 
-# genai.configure(api_key="API_KEY")
+db = client.get_database("plantingo")
+users_collection = db.get_collection("users")
 
 # Set up the model
 generation_config = {
@@ -61,6 +67,48 @@ def user_input():
         return jsonify({"response": model_output})
     except Exception as e:
         return jsonify({"error": "Request failed"}), 500
+    
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+    try:
+      user = users_collection.find_one({'username': username, 'password': password})
+      if user:
+          return jsonify({'message': 'Login successful'}), 200
+      else:
+          return jsonify({'error': 'Invalid username or password'}), 401
+    except Exception as e:
+        return jsonify({"error": "Request failed"}), 500
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.json
+    username = data.get('username') 
+    password = data.get('password')
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400  
+    try:
+        existing_user = users_collection.find_one({'username': username})
+        if existing_user:
+            return jsonify({'error': 'Username already exists'}), 400
+        new_user = {
+            'username': username,
+            'password': password,
+            'collections': []
+        }
+        users_collection.insert_one(new_user)
+        return jsonify({'response': 'User created successfully'}), 201
+    except Exception as e:
+        return jsonify({"error": "Request failed"}), 500
 
 if __name__ == "__main__":
+    try:
+        client.admin.command('ping')
+        print("Pinged your deployment. You successfully connected to MongoDB!")
+    except Exception as e:
+        print(e)
     app.run(debug=True)
