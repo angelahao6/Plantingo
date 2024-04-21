@@ -8,7 +8,8 @@ import Jade from "../assets/jade.png";
 import Hibiscus from "../assets/hibiscus.jpg";
 import Lily from "../assets/lily.png";
 
-const Collections = () => {
+const Collections = ({user}) => {
+  console.log(user)
   return (
     <div style={{ backgroundColor: "#FFFDF3", height: "100vh" }}>
       <p
@@ -32,6 +33,7 @@ const Collections = () => {
         }}
       >
         joe
+        {/* {user} */}
       </p>
       <img
         src={Ellipse}
