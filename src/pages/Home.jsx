@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Home = ( {setPage}) => {
+const Home = ( {setPage, user}) => {
   const navigate = useNavigate();
 
   return (

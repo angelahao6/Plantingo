@@ -16,7 +16,7 @@ const data = [
     { image: profile5, name: 'Taylor', points: 70 },
 ];
 
-function Leaderboard() {
+function Leaderboard({user}) {
     return (
         <div style={{
             backgroundColor: "#707C4F",

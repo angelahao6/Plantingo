@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const Overlay = ({retake, image}) => {
   const navigate = useNavigate();
   const [outputText, setOutputText] = useState('');
+  const [plant_name, setPlantName] = useState('sunflower');
 
   useEffect(() => {
     async function fetchData() {
@@ -25,7 +26,7 @@ const Overlay = ({retake, image}) => {
         <p style={{ fontSize: "24px" }}>{outputText}</p>
         <button style={{ marginBottom: 20, color: "white", backgroundColor: "#707C4F", width: 270, padding: 12, borderRadius: 15, fontSize: 35, border: "none" }}
           onClick={() => {
-            navigate("/gemini", { state : { image : image } });
+            navigate("/gemini", { state : { plant : outputText } });
           }}>chat</button>
         <button style={{ color: "rgba(0, 0, 0, 0.5)", width: 270, padding: 12, borderRadius: 15, fontSize: 35, border: "none" }} onClick={retake}>rescan</button>
       </div>

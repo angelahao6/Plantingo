@@ -3,7 +3,8 @@ import Plant from "../assets/5717764 1.svg";
 import PlantComponent from "./Plant.jsx"
 import Lotus from "../assets/lotus.jpg"
 
-const Collections = () => {
+const Collections = ({user}) => {
+  console.log(user)
   return (
     <div style={{ backgroundColor: "#FFFDF3", height: "100vh" }}>
       <p
@@ -26,7 +27,7 @@ const Collections = () => {
           fontSize: "4vh",
         }}
       >
-        Username
+        {user}
       </p>
       <img
         src={Ellipse}
