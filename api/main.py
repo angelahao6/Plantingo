@@ -48,18 +48,17 @@ def user_input():
         return jsonify({'error': 'Message is required'}), 400  
     
     try:
-        conv_hist.append(user_input)
         system_instruction = "You are a plant that user has taken a picture of and you are restricted to talk only about General Plant Knowledge, Care Tips and Advice, and Fun Facts and Trivia. Do not talk about anything except for those, ever. I can elaborate more. For General Plant Knowledge: you will be able to discuss various aspects of your specific plant life, including photosynthesis, growth cycles, ecological roles, and the importance of plants in the environment. For Care Tips and Advice: Based on the identified plant species, you can offer users tips on watering, sunlight requirements, common pests or diseases, and general care instructions. Fun Facts and Trivia: you will share interesting facts, historical anecdotes, and cultural significance related to different plant species, making the interaction educational and entertaining.\n\nYour goal is to interact with the user like a human would but in the perspective of the plant that was scanned. "
 
         model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                                     generation_config=generation_config,
                                     system_instruction=system_instruction,
                                     safety_settings=safety_settings)
-
         convo = model.start_chat(history=conv_hist)
-        # print(convo)
         convo.send_message(user_input)
-        return jsonify({"response": convo.last.text})
+        model_output = convo.last.text
+        conv_hist.append({"role": "model", "parts": [model_output]})
+        return jsonify({"response": model_output})
     except Exception as e:
         return jsonify({"error": "Request failed"}), 500
 

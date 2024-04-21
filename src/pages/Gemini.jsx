@@ -4,8 +4,7 @@ import axios from 'axios'; // Import Axios for making HTTP requests
 
 function Gemini() {
   const [inputText, setInputText] = useState('');
-  const [outputText, setOutputText] = useState('');
-  const [chatHistory, setChatHistory] = useState([])
+  const [chatHistory, setChatHistory] = useState([]);
 
   const handleChange = (event) => {
     setInputText(event.target.value);
@@ -13,9 +12,10 @@ function Gemini() {
 
   const handleSubmit = async () => {
     try {
+      setChatHistory(prev => [...prev, inputText]);
       const response = await axios.post('http://127.0.0.1:5000/user_input', { message: inputText });
-      setOutputText(response.data.response);
-      chatHistory
+      setChatHistory(prev => [...prev, response.data.response]);
+      setInputText('')
     } catch (error) {
       console.error('Error:', error);
     }
@@ -23,9 +23,45 @@ function Gemini() {
 
   return (
     <div>
-      <input type="text" value={inputText} onChange={handleChange} />
-      <button onClick={handleSubmit}>Send</button>
-      <div>{outputText}</div>
+      <div style={{}}>
+        <h1 style={{textAlign: "center"}}>Chat with Dicey!</h1>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
+        {chatHistory.map((item, index) => (
+          <div key={index} style={{ 
+            textAlign: index % 2 !== 0 ? "start" : "end",
+            background: index % 2 !== 0 ? "#FFFDF3" : "#BBC890", 
+            marginRight: index % 2 === 0 ? 30 : 0,
+            marginLeft: index % 2 !== 0 ? 30 : 0,
+            color: index % 2 !== 0 ? '#667085' : "black",
+            maxWidth: 280,
+            padding: 10,
+            borderRadius: 5, 
+            marginTop: 10,
+            alignSelf: index % 2 === 0 ? "flex-end" : "flex-start" }}>
+            {item}
+          </div>
+        ))}
+      </div>
+      <div style={{ textAlign: "center", marginTop: 50 }}>
+        <input type="text" value={inputText} onChange={handleChange} style={{
+          width: 300,
+          padding: "10px",
+          backgroundColor: "white",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          outline: "none",
+          fontSize: "16px"
+        }} 
+        placeholder="Write a message" 
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSubmit();
+          }
+        }} 
+      />
+      </div>
     </div>
   );
 }
