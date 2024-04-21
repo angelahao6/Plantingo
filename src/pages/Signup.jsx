@@ -26,7 +26,7 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      await axios.post("http://127.0.0.1:5000/signup", { username, password });
+      await axios.post("http://127.0.0.1:3001/signup", { username, password });
       setError("");
       navigate("/login");
     } catch (error) {
@@ -128,8 +128,7 @@ const Signup = () => {
           border: "none",
         }}
         onClick={() => {
-          if(error !== "Passwords do not match.")
-            handleSignup();
+          if (error !== "Passwords do not match.") handleSignup();
         }}
       >
         Create account!
