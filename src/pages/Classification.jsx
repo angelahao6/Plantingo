@@ -1,10 +1,10 @@
-
+// keep page for reference
 import { useState } from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 import PropTypes from 'prop-types';
 import {useLocation} from 'react-router-dom';
 
-function Gemini({ image }) {
+function Classification({ image }) {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const location = useLocation();
@@ -32,8 +32,8 @@ function Gemini({ image }) {
   );
 }
 
-export default Gemini;
+export default Classification;
 
-Gemini.propTypes = {
+Classification.propTypes = {
   image: PropTypes.string.isRequired 
 }
