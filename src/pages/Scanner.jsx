@@ -2,7 +2,7 @@ import {useRef, useState, useCallback} from 'react';
 import Webcam from "react-webcam";
 import Overlay from '../components/Overlay';
 
-const Scanner = () => {
+const Scanner = ({user}) => {
   const webcamRef = useRef(null);
   const [imgSrc, setImgSrc] = useState(null);
 

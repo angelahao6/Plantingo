@@ -11,6 +11,7 @@ import Leaderboard from "./pages/Leaderboard";
 import { useState } from "react";
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
+  const [username, setUsername] = useState('')
   /*
   currentPage (for navbar):
       0 - all light
@@ -21,13 +22,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<><Home setPage={setCurrentPage} /></>} />
-        <Route path="/login" element={<Login setPage={setCurrentPage}/>} />
+        <Route path="/" element={<><Home setPage={setCurrentPage} user={username} setUser={setUsername}/></>} />
+        <Route path="/login" element={<Login setPage={setCurrentPage} setUser={setUsername}/>} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/scanner" element={<><Scanner /><Navbar /></>} />
-        <Route path="/collections" element={<><Collections /><Navbar /></>} />
-        <Route path="/gemini" element={<><Gemini /> <Navbar /></>} />
-        <Route path="/leaderboard" element={<><Leaderboard /> <Navbar /></>} />
+        <Route path="/scanner" element={<><Scanner user={username} setUser={setUsername}/><Navbar /></>} />
+        <Route path="/collections" element={<><Collections user={username} setUser={setUsername}/><Navbar /></>} />
+        <Route path="/gemini" element={<><Gemini user={username} setUser={setUsername}/> <Navbar /></>} />
+        <Route path="/leaderboard" element={<Leaderboard user={username} setUser={setUsername}/>} />
       </Routes>
     </BrowserRouter>
   );

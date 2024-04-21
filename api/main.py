@@ -78,7 +78,7 @@ def login():
     try:
       user = users_collection.find_one({'username': username, 'password': password})
       if user:
-          return jsonify({'message': 'Login successful'}), 200
+          return jsonify({'message': username}), 200
       else:
           return jsonify({'error': 'Invalid username or password'}), 401
     except Exception as e:
@@ -101,7 +101,7 @@ def signup():
             'collections': []
         }
         users_collection.insert_one(new_user)
-        return jsonify({'response': 'User created successfully'}), 201
+        return jsonify({'response': username}), 201
     except Exception as e:
         return jsonify({"error": "Request failed"}), 500
 

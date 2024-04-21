@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const Login = ({setPage}) => {
+const Login = ({setPage, setUser}) => {
   const navigate = useNavigate();
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -18,8 +18,10 @@ const Login = ({setPage}) => {
 
   const handleLogin = async () => {
     try {
-        await axios.post('http://127.0.0.1:5000/login', { username, password });
+        const res = await axios.post('http://127.0.0.1:5000/login', { username, password });
+        console.log(res)
         setError('')
+        setUser(res.data.message)
         navigate('/collections')
         setPage(2)
     } catch (error) {
