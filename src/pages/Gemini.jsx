@@ -13,9 +13,9 @@ function Gemini() {
   const handleSubmit = async () => {
     try {
       setChatHistory(prev => [...prev, inputText]);
+      setInputText('')
       const response = await axios.post('http://127.0.0.1:5000/user_input', { message: inputText });
       setChatHistory(prev => [...prev, response.data.response]);
-      setInputText('')
     } catch (error) {
       console.error('Error:', error);
     }
