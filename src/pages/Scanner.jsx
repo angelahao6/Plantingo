@@ -9,7 +9,7 @@ const Scanner = () => {
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);
-    console.log(imageSrc)
+    // console.log(imageSrc)
   }, [webcamRef]);
 
   const retake = () => {
@@ -21,7 +21,7 @@ const Scanner = () => {
         {imgSrc ? (
             <div style={{ height: "100vh", width: "100%" }}>
               <img src={imgSrc} alt="webcam" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              <Overlay style={{position: "fixed"}} description={"KSDFJLDK"} retake={retake} />
+              <Overlay style={{position: "fixed"}} description={"KSDFJLDK"} retake={retake} image={imgSrc} />
             </div>
         ) : (
           <div style={{ height: "95vh", width: "100%" }}>
