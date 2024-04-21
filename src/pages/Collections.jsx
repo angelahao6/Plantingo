@@ -1,7 +1,12 @@
 import Ellipse from "../assets/Ellipse 813.svg";
 import Plant from "../assets/5717764 1.svg";
-import PlantComponent from "./Plant.jsx"
-import Lotus from "../assets/lotus.jpg"
+import PlantComponent from "./Plant.jsx";
+import Lotus from "../assets/lotus.jpg";
+import Cactus from  "../assets/cactus.jpeg";
+import Rose from "../assets/rose.jpg";
+import Jade from "../assets/jade.png";
+import Hibiscus from "../assets/hibiscus.jpg";
+import Lily from "../assets/lily.png";
 
 const Collections = () => {
   return (
@@ -26,7 +31,7 @@ const Collections = () => {
           fontSize: "4vh",
         }}
       >
-        Username
+        joe
       </p>
       <img
         src={Ellipse}
@@ -53,9 +58,9 @@ const Collections = () => {
           style={{
             fontSize: "3vh",
             fontWeight: "300",
-            paddingLeft: "7vw",
+            paddingLeft: "6vw",
             margin: "1vh",
-            paddingRight: "7vw",
+            paddingRight: "6vw",
           }}
         >
           My Points:
@@ -71,11 +76,11 @@ const Collections = () => {
       {/* insert collections here */}
       <div style={{ display: "flex", width: "100%", height: "45vh", flexWrap: "wrap", overflow: "auto", justifyContent: "space-evenly"}}>
         <PlantComponent image={Lotus} name="Lotus"/>
-        <PlantComponent image={Lotus} name="Lotus"/>
-        <PlantComponent image={Lotus} name="Lotus"/>
-        <PlantComponent image={Lotus} name="Lotus"/>
-        <PlantComponent image={Lotus} name="Lotus"/>
-        <PlantComponent image={Lotus} name="Lotus"/>
+        <PlantComponent image={Cactus} name="Cactus"/>
+        <PlantComponent image={Rose} name="Rose"/>
+        <PlantComponent image={Jade} name="Jade plant"/>
+        <PlantComponent image={Hibiscus} name="Hibiscus"/>
+        <PlantComponent image={Lily} name="Lily"/>
       </div>
       {/* <p style={{ marginBottom: "0" }}>Bottom Text</p> */}
     </div>
