@@ -30,11 +30,11 @@ const Collections = () => {
       </p>
       <img
         src={Ellipse}
-        style={{ position: "absolute", top: "8%", right: "100px" }}
+        style={{ position: "absolute", top: "8%", right: "50px" }}
       />
       <img
         src={Plant}
-        style={{ position: "absolute", top: "5.5%", right: "118px" }}
+        style={{ position: "absolute", top: "5.5%", right: "68px" }}
       />
       <div
         style={{
@@ -70,7 +70,12 @@ const Collections = () => {
         <p style={{ color: "#707C4F", fontStyle: "italic", fontWeight: "200"}}>See all</p>
       </div>
       {/* insert collections here */}
-      <div style={{ display: "flex"}}>
+      <div style={{ display: "flex", width: "100%", height: "45vh", flexWrap: "wrap", overflow: "auto", justifyContent: "space-evenly"}}>
+        <PlantComponent image={Lotus} name="Lotus"/>
+        <PlantComponent image={Lotus} name="Lotus"/>
+        <PlantComponent image={Lotus} name="Lotus"/>
+        <PlantComponent image={Lotus} name="Lotus"/>
+        <PlantComponent image={Lotus} name="Lotus"/>
         <PlantComponent image={Lotus} name="Lotus"/>
       </div>
       {/* <p style={{ marginBottom: "0" }}>Bottom Text</p> */}

@@ -1,6 +1,6 @@
 const Plant = ({ image, name }) => {
   return (
-    <div style={{ width: "40vw", height: "20vh" }}>
+    <div style={{ width: "40vw", height: "20vh", margin: "10px"}}>
       <img
         src={image}
         style={{
@@ -9,13 +9,13 @@ const Plant = ({ image, name }) => {
           height: "100%",
           maxHeight: "100%",
           borderRadius: "20px",
-          margin: "2vh",
+          position: "relative",
           zIndex: "0",
         }}
       ></img>
       <p
         style={{
-          marginTop: "-8vh",
+          marginTop: "-5vh",
           marginLeft: "5vw",
           color: "#FFFDF3",
           backgroundColor: "#4D5652",
@@ -24,8 +24,10 @@ const Plant = ({ image, name }) => {
           width: "60%",
           fontWeight: "200",
           fontStyle: "italic",
-          padding: "10px",
+          padding: "5px",
+          position: "relative",
           zIndex: "1",
+          wordWrap: "break-word"
         }}
       >
         {name}
