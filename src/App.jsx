@@ -23,7 +23,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<><Home setPage={setCurrentPage} /><Navbar /></>} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setPage={setCurrentPage}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/scanner" element={<><Scanner /><Navbar /></>} />
         <Route path="/collections" element={<><Collections /><Navbar /></>} />

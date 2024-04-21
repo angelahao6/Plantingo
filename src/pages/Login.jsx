@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({setPage}) => {
   const navigate = useNavigate();
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -21,6 +21,7 @@ const Login = () => {
         await axios.post('http://127.0.0.1:5000/login', { username, password });
         setError('')
         navigate('/collections')
+        setPage(2)
     } catch (error) {
         console.error(error)
         setError("Invalid username or password.")
