@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = ( {setPage}) => {
   const navigate = useNavigate();
 
   return (
@@ -21,6 +21,7 @@ const Home = () => {
       <button
         onClick={() => {
           navigate("/scanner");
+          setPage(1);
         }}
         style={{
           width: "80%",
