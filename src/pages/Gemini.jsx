@@ -42,7 +42,7 @@ function Gemini() {
         zIndex: -1
       }}></div>
       <h1 style={{textAlign: "center"}}>Chat with Dicey!</h1>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
+      <div style={{ display: "flex", flexDirection: "column", overflow: "scroll", width: "80%" }}>
         {chatHistory.map((item, index) => (
           <div key={index} style={{ 
             textAlign: index % 2 !== 0 ? "start" : "end",
@@ -59,7 +59,7 @@ function Gemini() {
           </div>
         ))}
       </div>
-      <div style={{ textAlign: "center", marginTop: 50 }}>
+      <div style={{ textAlign: "center", marginTop: 50, marginBottom: 120}}>
         <input type="text" value={inputText} onChange={handleChange} style={{
           width: 300,
           padding: "10px",

@@ -27,3 +27,4 @@ dist-ssr
 venv
 __pycache__
 /api/env
+/api/setup.sh

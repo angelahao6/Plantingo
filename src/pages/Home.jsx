@@ -20,7 +20,7 @@ const Home = () => {
       </div>
       <button
         onClick={() => {
-          navigate("/scanner");
+          navigate("/login");
         }}
         style={{
           width: "80%",
