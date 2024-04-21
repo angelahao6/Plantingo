@@ -17,7 +17,7 @@ const Navbar = () => {
       textAlign: "center",
       borderTop: "1px solid #ddd",
     }}>
-      <img src={cup} onClick={() => navigate("/")} style={{ margin: "0 30px" }} />
+      <img src={cup} onClick={() => navigate("/collections")} style={{ margin: "0 30px" }} />
       <img src={camera} onClick={() => navigate("/scanner")} style={{ margin: "0 30px" }} />
       <img src={leaf} onClick={() => navigate("/gemini")} style={{ margin: "0 30px" }} />
     </div>
