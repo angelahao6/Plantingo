@@ -26,17 +26,17 @@ function App() {
           path="/"
           element={
             <>
-              <Home setPage={setCurrentPage} />
+              <Home setPage={setCurrentPage} user={username} setUser={setUsername} />
             </>
           }
         />
-        <Route path="/login" element={<Login setPage={setCurrentPage} />} />
+        <Route path="/login" element={<Login setPage={setCurrentPage} setUser={setUsername}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/scanner"
           element={
             <>
-              <Scanner />
+              <Scanner user={username} setUser={setUsername}/>
               <Navbar selected={currentPage} updateSelected={setCurrentPage} />
             </>
           }
@@ -45,7 +45,7 @@ function App() {
           path="/collections"
           element={
             <>
-              <Collections />
+              <Collections user={username} setUser={setUsername}/>
               <Navbar selected={currentPage} updateSelected={setCurrentPage} />
             </>
           }
@@ -54,7 +54,7 @@ function App() {
           path="/gemini"
           element={
             <>
-              <Gemini />{" "}
+              <Gemini user={username} setUser={setUsername}/>{" "}
               <Navbar selected={currentPage} updateSelected={setCurrentPage} />
             </>
           }
@@ -63,7 +63,7 @@ function App() {
           path="/leaderboard"
           element={
             <>
-              <Leaderboard />{" "}
+              <Leaderboard user={username} setUser={setUsername}/>{" "}
               <Navbar selected={currentPage} updateSelected={setCurrentPage} />{" "}
             </>
           }
