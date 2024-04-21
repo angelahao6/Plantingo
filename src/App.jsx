@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './pages/Home';
-import Scanner from './pages/Scanner';
+import Home from "./pages/Home";
+import Scanner from "./pages/Scanner";
 import Collections from "./pages/Collections";
 import Gemini from "./pages/Gemini";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import './App.css'
+import "./App.css";
 import Navbar from "./components/Navbar";
 import Leaderboard from "./pages/Leaderboard";
 import { useState } from "react";
@@ -21,16 +21,55 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<><Home setPage={setCurrentPage} /><Navbar /></>} />
-        <Route path="/login" element={<Login setPage={setCurrentPage}/>} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Home setPage={setCurrentPage} />
+            </>
+          }
+        />
+        <Route path="/login" element={<Login setPage={setCurrentPage} />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/scanner" element={<><Scanner /><Navbar /></>} />
-        <Route path="/collections" element={<><Collections /><Navbar /></>} />
-        <Route path="/gemini" element={<><Gemini /> <Navbar /></>} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route
+          path="/scanner"
+          element={
+            <>
+              <Scanner />
+              <Navbar selected={currentPage} updateSelected={setCurrentPage} />
+            </>
+          }
+        />
+        <Route
+          path="/collections"
+          element={
+            <>
+              <Collections />
+              <Navbar selected={currentPage} updateSelected={setCurrentPage} />
+            </>
+          }
+        />
+        <Route
+          path="/gemini"
+          element={
+            <>
+              <Gemini />{" "}
+              <Navbar selected={currentPage} updateSelected={setCurrentPage} />
+            </>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <>
+              <Leaderboard />{" "}
+              <Navbar selected={currentPage} updateSelected={setCurrentPage} />{" "}
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App
+export default App;
