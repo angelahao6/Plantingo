@@ -26,3 +26,4 @@ dist-ssr
 # Flask
 venv
 __pycache__
+/api/env

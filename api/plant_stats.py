@@ -77,11 +77,13 @@ def plant_stats():
     "output: ",
   ]
 
-  response = model.generate_content(prompt_parts)
-  for uploaded_file in uploaded_files:
-    genai.delete_file(name=uploaded_file.name)
-  
-  return jsonify({"response": response.text})
+    response = model.generate_cgontent(prompt_parts)
+    print(response.text)
+    for uploaded_file in uploaded_files:
+        genai.delete_file(name=uploaded_file.name)  
+    
+    return jsonify({"response": response.text})
 
+    
 if __name__ == "__main__":
     app.run(debug=True)
