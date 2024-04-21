@@ -49,7 +49,7 @@ const Collections = ({user}) => {
           backgroundColor: "#707C4F",
           color: "#FFFDF3",
           width: "50%",
-          margin: "5vh auto",
+          margin: "auto",
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
@@ -69,7 +69,7 @@ const Collections = ({user}) => {
         </p>
         <p style={{ fontSize: "3vh", margin: "1vh", fontWeight: "bold"}}>60</p>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", margin: "5vw"}}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "5vw"}}>
         <p style={{
           fontSize: "2vh",
           fontWeight: "600",
