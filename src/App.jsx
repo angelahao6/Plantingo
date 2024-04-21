@@ -9,7 +9,6 @@ import './App.css'
 import Navbar from "./components/Navbar";
 import Leaderboard from "./pages/Leaderboard";
 import { useState } from "react";
-
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   /*

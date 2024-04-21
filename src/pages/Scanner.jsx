@@ -21,20 +21,22 @@ const Scanner = () => {
         {imgSrc ? (
             <div style={{ height: "100vh", width: "100%" }}>
               <img src={imgSrc} alt="webcam" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              <Overlay style={{position: "fixed"}} description={"KSDFJLDK"} retake={retake} image={imgSrc} />
+              <Overlay style={{position: "fixed"}} retake={retake} image={imgSrc} />
             </div>
         ) : (
           <div style={{ height: "95vh", width: "100%" }}>
-            <Webcam style={{ width: "100%", height: "100%", objectFit: "cover" }} ref={webcamRef} screenshotFormat="image/jpeg"/>
+            <Webcam style={{ width: "100%", height: "100%", objectFit: "cover" }} ref={webcamRef} screenshotFormat="image/jpeg"
+              onClick={capture}
+            />
           </div>
         )}
-      <div className="btn-container">
+      {/* <div className="btn-container">
         {imgSrc ? (
           <></>
         ) : (
           <button onClick={capture}>Capture photo</button>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
