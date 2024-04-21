@@ -52,7 +52,7 @@ function Gemini() {
           zIndex: -1,
         }}
       ></div>
-      <h1 style={{ textAlign: "center" }}>Chat with Dicey!</h1>
+      <h1 style={{ textAlign: "center", width: "75vw", color: "#707C4F" }}>Chat with your new friend!</h1>
       <div
         style={{
           display: "flex",

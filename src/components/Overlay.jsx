@@ -27,8 +27,8 @@ const Overlay = ({retake, image}) => {
         <button style={{ marginBottom: 20, color: "white", backgroundColor: "#707C4F", width: 270, padding: 12, borderRadius: 15, fontSize: 35, border: "none" }}
           onClick={() => {
             navigate("/gemini", { state : { plant : outputText } });
-          }}>chat</button>
-        <button style={{ color: "rgba(0, 0, 0, 0.5)", width: 270, padding: 12, borderRadius: 15, fontSize: 35, border: "none" }} onClick={retake}>rescan</button>
+          }}>Chat with me!</button>
+        <button style={{ color: "rgba(0, 0, 0, 0.5)", width: 270, padding: 12, borderRadius: 15, fontSize: 35, border: "none" }} onClick={retake}>Retake Picture</button>
       </div>
     </div>
   );
