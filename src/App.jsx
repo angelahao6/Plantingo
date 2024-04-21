@@ -4,6 +4,7 @@ import Scanner from './pages/Scanner';
 import Collections from "./pages/Collections";
 import Gemini from "./pages/Gemini";
 import './App.css'
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/collections" element={<Collections />} />
         <Route path="/gemini" element={<Gemini />} />
       </Routes>
+      <Navbar />
     </BrowserRouter>
   );
 }

@@ -22,10 +22,26 @@ function Gemini() {
   };
 
   return (
-    <div>
-      <div style={{}}>
-        <h1 style={{textAlign: "center"}}>Chat with Dicey!</h1>
-      </div>
+    <div style={{ 
+      position: "relative",
+      height: "100vh", 
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <div style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundImage: "url('src/assets/background.png')",
+        backgroundSize: "cover",
+        opacity: 0.3,
+        zIndex: -1
+      }}></div>
+      <h1 style={{textAlign: "center"}}>Chat with Dicey!</h1>
       <div style={{ display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
         {chatHistory.map((item, index) => (
           <div key={index} style={{ 
