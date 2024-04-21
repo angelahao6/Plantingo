@@ -30,7 +30,6 @@ function App() {
         <Route path="/gemini" element={<><Gemini /> <Navbar /></>} />
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
-      <Navbar selected = {currentPage} updateSelected={setCurrentPage}/>
     </BrowserRouter>
   );
 }
