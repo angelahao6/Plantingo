@@ -5,12 +5,47 @@ import boldLeaf from "../assets/leaff.svg";
 import lightCup from "../assets/cup_icon_light.svg";
 import lightCamera from "../assets/camera_icon_light.svg";
 import lightLeaf from "../assets/leaf_icon_light.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = ({ selected, updateSelected }) => {
   const [cup, setCup] = useState(lightCup);
   const [leaf, setLeaf] = useState(lightLeaf);
   const [camera, setCamera] = useState(lightCamera);
+
+  useEffect(() => {
+    /*
+      0 - all light
+      1 - camera bold
+      2 - leaf bold
+      3 - cup bold
+    */
+    switch (selected) {
+      case 0:
+        setCup(lightCup);
+        setCamera(lightCamera);
+        setLeaf(lightLeaf);
+        break;
+      case 1:
+        setCup(lightCup);
+        setCamera(boldCamera);
+        setLeaf(lightLeaf);
+        break;
+      case 2:
+        setCup(lightCup);
+        setCamera(lightCamera);
+        setLeaf(boldLeaf);
+        break;
+      case 3:
+        setCup(boldCup);
+        setCamera(lightCamera);
+        setLeaf(lightLeaf);
+        break;
+      default:
+        setCup(lightCup);
+        setCamera(lightCamera);
+        setLeaf(lightLeaf);
+    }
+  }, [selected]);
 
   const navigate = useNavigate();
 
@@ -31,10 +66,8 @@ const Navbar = () => {
       <img
         src={cup}
         onClick={() => {
-          navigate("/");
-          setCup(boldCup);
-          setCamera(lightCamera);
-          setLeaf(lightLeaf);
+          navigate("/gemini");
+          updateSelected(3);
         }}
         style={{ margin: "0 30px" }}
       />
@@ -42,19 +75,15 @@ const Navbar = () => {
         src={camera}
         onClick={() => {
           navigate("/scanner");
-          setCup(lightCamera);
-          setCamera(boldCamera);
-          setLeaf(lightLeaf);
+          updateSelected(1);
         }}
         style={{ margin: "0 30px" }}
       />
       <img
         src={leaf}
         onClick={() => {
-          navigate("/gemini");
-          setCup(lightCup);
-          setCamera(lightCamera);
-          setLeaf(boldLeaf);
+          navigate("/collections");
+          updateSelected(2);
         }}
         style={{ margin: "0 30px" }}
       />
