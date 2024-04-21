@@ -4,9 +4,10 @@ from flask_cors import CORS
 from pathlib import Path
 import hashlib
 import os
-import base64
-from PIL import Image
-from io import BytesIO
+import base64, binascii
+import PIL.Image
+import io
+import re
 
 app = Flask(__name__)
 CORS(app)
@@ -46,21 +47,27 @@ safety_settings = [
 @app.route('/plant_stats', methods=['POST'])
 def plant_stats():
   data = request.json
-  user_input = data.get('image') 
+  image = data.get('image')
 
-  if not user_input:
+  if not image:
     return jsonify({'error': 'Message is required'}), 400  
-  
-  system_instruction = "The user will upload a picture of plant and you will return some information in the following format:\n\nCongrats! You scanned a <name_of_plant>.\nRarity: <Rarity>\nPoints: <Points>\nOrigin: <Origin>\n<Quick Greeting with plant name>\n\n\n\nEverything above should be output exactly as shown, except in tags (<>) where the output should vary based on the plant that was scanned. You should be able to identify the actual name of the plant (name_of_plant), assign a rarity by using predictive rarity analysis of plants and sort it into these categories [Common, Uncommon, Rare, Super Rare], the points assigned should be associated with the rarity of the plant: Common: 10, Uncommon: 50, Rare: 250, Super Rare: 500. You should also find the geographical origins of the plant for (Origin).\nFor the quick greeting, you should keep it short, usually a greeting and one short sentence, but if it is a very unique plant then keep it to a greeting and two short sentence max. You should be greeting the user in the perspective of the plant from the image. You should also a short play on the actual name of then plant. Example names would be: Dicey for Dicentra Cupid, Bougie for Boungainvillea, Titan for Amorphophallus Titanum.\nYou should only accept images as inputs, not texts, videos, audios. You should only process images that are plants. if the image is not a plant, return a statement saying 'Plant not detected'"
 
-  model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
-                                generation_config=generation_config,
-                                system_instruction=system_instruction,
-                                safety_settings=safety_settings)
+  try:
+    image = base64.b64decode(image, validate=True)
+    file_to_save = "my_image.png"
+    with open(file_to_save, "wb") as f:
+      f.write(image)
+  except binascii.Error as e:
+    print(e, image)
 
-  result = model.generate_content(user_input)
+  prompt = "Use this picture of a plant and you will return information in the following format:\n\nCongrats! You scanned a <name_of_plant>.\nRarity: <Rarity>\nPoints: <Points>\nOrigin: <Origin>\n<Quick Greeting with plant name>\n\n\n\nEverything above should be output exactly as shown, except in tags (<>) where the output should vary based on the plant that was scanned. You should be able to identify the actual name of the plant (name_of_plant), assign a rarity by using predictive rarity analysis of plants and sort it into these categories [Common, Uncommon, Rare, Super Rare], the points assigned should be associated with the rarity of the plant: Common: 10, Uncommon: 50, Rare: 250, Super Rare: 500. You should also find the geographical origins of the plant for (Origin).\nFor the quick greeting, you should keep it short, usually a greeting and one short sentence, but if it is a very unique plant then keep it to a greeting and two short sentence max. You should be greeting the user in the perspective of the plant from the image. You should also a short play on the actual name of then plant. Example names would be: Dicey for Dicentra Cupid, Bougie for Boungainvillea, Titan for Amorphophallus Titanum.\nYou should only accept images as inputs, not texts, videos, audios. You should only process images that are plants. if the image is not a plant, return a statement saying 'Plant not detected'"
+
+  model = genai.GenerativeModel('gemini-pro-vision')
   
-  return jsonify({"response": result.text})
+  final_img = PIL.Image.open("my_image.png")
+  response = model.generate_content([prompt, final_img])
+  
+  return jsonify({"response": response.text})
 
 if __name__ == "__main__":
     app.run(debug=True)
