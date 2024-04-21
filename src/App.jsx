@@ -27,7 +27,7 @@ function App() {
         <Route path="/scanner" element={<><Scanner /><Navbar /></>} />
         <Route path="/collections" element={<><Collections /><Navbar /></>} />
         <Route path="/gemini" element={<><Gemini /> <Navbar /></>} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/leaderboard" element={<><Leaderboard /> <Navbar /></>} />
       </Routes>
     </BrowserRouter>
   );
