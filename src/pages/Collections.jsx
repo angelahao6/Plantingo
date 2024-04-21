@@ -60,14 +60,13 @@ const Collections = () => {
         >
           My Points:
         </p>
-        <p style={{ fontSize: "3vh", margin: "1vh" }}>60</p>
+        <p style={{ fontSize: "3vh", margin: "1vh", fontWeight: "bold"}}>60</p>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", margin: "5vw"}}>
         <p style={{
           fontSize: "2vh",
           fontWeight: "600",
         }}>Your Collection</p>
-        <p style={{ color: "#707C4F", fontStyle: "italic", fontWeight: "200"}}>See all</p>
       </div>
       {/* insert collections here */}
       <div style={{ display: "flex", width: "100%", height: "45vh", flexWrap: "wrap", overflow: "auto", justifyContent: "space-evenly"}}>
