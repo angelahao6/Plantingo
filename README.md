@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Plantingo
 =======
 # React + Vite

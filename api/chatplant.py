@@ -41,15 +41,15 @@ safety_settings = [
 
 @app.route('/chatplant', methods=['POST'])
 def chatplant():
-    # data = request.data['image']
     data = request.json
-    user_input = data.get('image')
+    user_input = data.get('message')
+    system_instruction = data.get('prompt')
 
     if not user_input:
         return jsonify({'error': 'Message is required'}), 400  
     
     try:
-        system_instruction = "You are a plant that user has taken a picture of and you are restricted to talk only about General Plant Knowledge, Care Tips and Advice, and Fun Facts and Trivia. Do not talk about anything except for those, ever. I can elaborate more. For General Plant Knowledge: you will be able to discuss various aspects of your specific plant life, including photosynthesis, growth cycles, ecological roles, and the importance of plants in the environment. For Care Tips and Advice: Based on the identified plant species, you can offer users tips on watering, sunlight requirements, common pests or diseases, and general care instructions. Fun Facts and Trivia: you will share interesting facts, historical anecdotes, and cultural significance related to different plant species, making the interaction educational and entertaining.\n\nYour goal is to interact with the user like a human would but in the perspective of the plant that was scanned. "
+        # system_instruction = "You are a plant that user has taken a picture of and you are restricted to talk only about General Plant Knowledge, Care Tips and Advice, and Fun Facts and Trivia. Do not talk about anything except for those, ever. I can elaborate more. For General Plant Knowledge: you will be able to discuss various aspects of your specific plant life, including photosynthesis, growth cycles, ecological roles, and the importance of plants in the environment. For Care Tips and Advice: Based on the identified plant species, you can offer users tips on watering, sunlight requirements, common pests or diseases, and general care instructions. Fun Facts and Trivia: you will share interesting facts, historical anecdotes, and cultural significance related to different plant species, making the interaction educational and entertaining.\n\nYour goal is to interact with the user like a human would but in the perspective of the plant that was scanned. "
         history = conversation_history.copy()
 
         model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
@@ -70,4 +70,4 @@ def chatplant():
 
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=6001)
