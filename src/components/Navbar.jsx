@@ -16,6 +16,7 @@ const Navbar = () => {
       padding: "10px",
       textAlign: "center",
       borderTop: "1px solid #ddd",
+      zIndex: "2"
     }}>
       <img src={cup} onClick={() => navigate("/")} style={{ margin: "0 30px" }} />
       <img src={camera} onClick={() => navigate("/scanner")} style={{ margin: "0 30px" }} />
