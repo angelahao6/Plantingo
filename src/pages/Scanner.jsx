@@ -18,6 +18,7 @@ const Scanner = ({user}) => {
 
   return (
     <div className="container">
+      <p style={{position: "absolute", top: "5vh", left: "50%", transform: "translateX(-50%)", width: "75vw", fontSize: "20px", color: "white", backdropFilter: "blur(10px)", padding: "10px", borderRadius: "20px"}}>Press any key to take a picture!</p>
         {imgSrc ? (
             <div style={{ height: "100vh", width: "100%" }}>
               <img src={imgSrc} alt="webcam" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
