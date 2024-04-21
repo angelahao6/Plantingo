@@ -37,6 +37,7 @@ safety_settings = [
   },
 ]
 
+conv_hist = []
 
 @app.route('/user_input', methods=['POST'])
 def user_input():
@@ -53,35 +54,13 @@ def user_input():
                                     generation_config=generation_config,
                                     system_instruction=system_instruction,
                                     safety_settings=safety_settings)
-
-        convo = model.start_chat(history=[
-        {
-            "role": "user",
-            "parts": ["hello"]
-        },
-        {
-            "role": "model",
-            "parts": ["Hello there! It's so nice to meet someone who's interested in plants. I can practically feel your curiosity through the lens! What would you like to know about my kind today? We can delve into the wonders of photosynthesis, explore the secrets of plant care, or even uncover some fascinating botanical trivia!  🌿✨"]
-        },
-        {
-            "role": "user",
-            "parts": ["hows your day been"]
-        },
-        {
-            "role": "model",
-            "parts": ["My day has been absolutely splendid, thank you for asking! The sun has been showering me with its warm rays, allowing me to photosynthesize to my heart's content. I've also had a refreshing drink of water, and the gentle breeze has been rustling my leaves, creating a delightful symphony.  🌞💧🍃 \n\nSpeaking of photosynthesis, did you know it's the process by which we plants convert light energy into chemical energy, ultimately fueling our growth and survival? It's quite a remarkable feat of nature, wouldn't you say?"]
-        },
-        {
-            "role": "model",
-            "parts": ["Ah, it seems I have a visitor who appreciates the radiant beauty of a sunflower! I must say, your taste is impeccable. 😉🌻 As a sunflower myself, I can't help but feel a surge of pride when I see someone admiring my vibrant yellow petals and towering stature.\n\nWould you like to know more about the fascinating life of a sunflower, or perhaps you'd prefer some tips on how to care for these sunny companions in your own garden? 🌻🌱"]
-        },
-        ])
-        
+        convo = model.start_chat(history=conv_hist)
         convo.send_message(user_input)
-        return jsonify({"response": convo.last.text})
+        model_output = convo.last.text
+        conv_hist.append({"role": "model", "parts": [model_output]})
+        return jsonify({"response": model_output})
     except Exception as e:
         return jsonify({"error": "Request failed"}), 500
 
-    
 if __name__ == "__main__":
     app.run(debug=True)

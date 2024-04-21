@@ -7,7 +7,6 @@ import {useLocation} from 'react-router-dom';
 function Gemini({ image }) {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
-
   const location = useLocation();
 
   const handleChange = (event) => {
@@ -15,9 +14,9 @@ function Gemini({ image }) {
   };
 
   const handleSubmit = async () => {
-    // console.log('image', location.state.image)
+    // console.log('image', location.state.image.slice(23))
     try {
-      const response = await axios.post('http://127.0.0.1:5000/plant_stats', { image: location.state.image });
+      const response = await axios.post('http://127.0.0.1:5000/plant_stats', { image: location.state.image.slice(23) });
       setOutputText(response.data.response);
     } catch (error) {
       console.error('Error:', error.response.data);
